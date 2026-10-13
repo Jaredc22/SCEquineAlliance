@@ -81,7 +81,7 @@ export async function handleJoin(request, env) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from: "SCEA Website <onboarding@resend.dev>",  // TEMP: swap back to contact@scequinealliance.com once domain is verified
+        from: "SCEA Website <contact@scequinealliance.com>",
         to: ["info@scequinealliance.com"],
         reply_to: data.contactEmail,
         subject: `New ${data.tier} application ($${data.amount}): ${data.orgName}`,
