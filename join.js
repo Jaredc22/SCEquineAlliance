@@ -1,17 +1,7 @@
-// Cloudflare Pages Function
-// Deploys automatically at /api/join when this file lives at /functions/api/join.js
-//
-// Uses the SAME Resend setup as /functions/api/contact.js — no additional setup needed
-// if you've already configured RESEND_API_KEY for that one. See contact.js for the
-// full setup steps (Resend account, verified domain, Cloudflare env variable).
-//
-// NOTE: This does NOT process payment. It only emails the submitted application to
-// info@scequinealliance.com. Payment is still by check per the form's instructions
-// until online/card payment (e.g. Stripe) is wired up in a future update.
+// Handles the membership application form submission.
+// Imported and routed to by worker.js -- see that file for routing.
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
-
+export async function handleJoin(request, env) {
   let data;
   try {
     data = await request.json();

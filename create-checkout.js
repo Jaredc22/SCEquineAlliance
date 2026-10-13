@@ -1,21 +1,8 @@
-// Cloudflare Pages Function
-// Deploys automatically at /api/create-checkout when this file lives at
-// /functions/api/create-checkout.js
-//
-// SETUP REQUIRED before this works:
-// 1. In the Stripe Dashboard, switch to Test mode (top-right toggle) to start.
-// 2. Go to Developers -> API keys, copy the Secret key (starts with sk_test_...).
-// 3. In Cloudflare Pages -> your project -> Settings -> Environment Variables, add:
-//      STRIPE_SECRET_KEY = <that key>
-//    (Add it for both "Production" and "Preview" environments.)
-// 4. Redeploy. That's it.
-// 5. When ready to accept real payments: switch Stripe to Live mode, copy the new
-//    sk_live_... key, and replace the STRIPE_SECRET_KEY value in Cloudflare. No code
-//    changes needed to go live.
+// Creates a Stripe Checkout Session for the selected membership tier.
+// Imported and routed to by worker.js -- see that file for routing.
 //
 // SECURITY NOTE: The dollar amount is determined here, server-side, from the tier
-// name only -- never trusted from the client. This prevents someone from tampering
-// with the page to submit a lower amount than their selected tier.
+// name only -- never trusted from the client.
 
 const TIER_AMOUNTS = {
   "Individual": 2000,        // amounts in cents
@@ -23,9 +10,7 @@ const TIER_AMOUNTS = {
   "Founding Sponsor": 20000
 };
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
-
+export async function handleCreateCheckout(request, env) {
   let data;
   try {
     data = await request.json();

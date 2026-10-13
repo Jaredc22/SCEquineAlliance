@@ -1,19 +1,7 @@
-// Cloudflare Pages Function
-// Deploys automatically at /api/contact when this file lives at /functions/api/contact.js
-//
-// SETUP REQUIRED before this works:
-// 1. Create a free account at https://resend.com
-// 2. Verify your sending domain (scequinealliance.com) in Resend — this proves you own the
-//    domain so Resend will actually deliver mail "from" it instead of getting flagged as spam.
-// 3. Create an API key in Resend.
-// 4. In the Cloudflare Pages dashboard: Settings -> Environment variables, add:
-//      RESEND_API_KEY = <your key>
-//    (Add it for both "Production" and "Preview" environments.)
-// 5. Redeploy. That's it — no other code changes needed.
+// Handles the Contact form submission.
+// Imported and routed to by worker.js -- see that file for routing.
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
-
+export async function handleContact(request, env) {
   let data;
   try {
     data = await request.json();
@@ -33,7 +21,6 @@ export async function onRequestPost(context) {
     });
   }
 
-  // basic email sanity check
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
     return new Response(JSON.stringify({ error: "Invalid email address" }), {
@@ -70,8 +57,6 @@ export async function onRequestPost(context) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        // "from" MUST be an address on a domain you've verified in Resend.
-        // Update this once scequinealliance.com is verified there.
         from: "SCEA Website <contact@scequinealliance.com>",
         to: ["info@scequinealliance.com"],
         reply_to: email,
