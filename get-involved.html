@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get Involved — South Carolina Equine Alliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sc-blue: #042E56;
+    --navy-ink: #16233A;
+    --cream: #FAF8F4;
+    --white: #FFFFFF;
+    --gold: #A9803D;
+    --red: #DD2417;
+    --gray-slate: #626C7A;
+    --gray-line: #DCE0E5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--navy-ink);
+    font-family:'Inter', system-ui, sans-serif; line-height:1.6; font-size:16.5px;
+  }
+  .wrap{max-width:700px; margin:0 auto; padding:0 40px;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- Nav ---------- */
+  header.pagehead{background:var(--sc-blue); padding-bottom:70px;}
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:26px 48px; box-sizing:border-box;
+  }
+  .nav-logo{display:flex; align-items:center; text-decoration:none;}
+  .nav-logo img{height:150px; width:auto; object-fit:contain; display:block;}
+  .navlinks{display:flex; gap:34px;}
+  .navlinks a{color:rgba(255,255,255,.85); text-decoration:none; font-size:14.5px; font-weight:500;}
+  .navlinks a:hover, .navlinks a.active{color:var(--white);}
+  .navlinks a.active{border-bottom:2px solid var(--red); padding-bottom:4px;}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0; z-index:30;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--white); border-radius:1px; transition:transform .2s ease, opacity .2s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .pagehead-inner{padding:20px 48px 0; color:var(--white);}
+  h1.pagetitle{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:clamp(38px,4.4vw,56px);
+    margin:0 0 14px;
+  }
+  .pagehead-inner p{color:#C9D6E5; font-size:18px; max-width:none; margin:0;}
+
+  /* ---------- Content ---------- */
+  section.involved-section{padding:72px 0 96px; text-align:center;}
+
+  .member-cta{
+    display:inline-block; background:var(--red); color:var(--white); text-decoration:none;
+    font-family:'Playfair Display',serif; font-weight:800; font-size:22px;
+    padding:22px 48px; border-radius:3px; letter-spacing:.01em;
+  }
+  .member-cta:hover{background:#b81d13;}
+  .member-cta-sub{color:var(--gray-slate); font-size:14.5px; margin:16px 0 0;}
+
+  .signup-divider{
+    display:flex; align-items:center; gap:16px; margin:48px 0 40px; color:#A9B4C2;
+    font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  }
+  .signup-divider::before, .signup-divider::after{content:""; flex:1; height:1px; background:var(--gray-line);}
+
+  h2{
+    font-family:'Playfair Display', serif; font-weight:800; font-size:28px; color:var(--sc-blue); margin:0 0 14px;
+  }
+  p.lede{color:#3B4657; font-size:17px; max-width:480px; margin:0 auto 30px;}
+
+  form.gate{display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:520px; margin:0 auto; text-align:left;}
+  .form-consent{
+    grid-column:span 2; display:flex; gap:10px; align-items:flex-start; text-align:left;
+    font-size:12.5px; line-height:1.6; color:var(--gray-slate); margin-top:2px;
+  }
+  .form-consent input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  .form-consent a{color:var(--sc-blue); text-decoration:underline;}
+  .form-consent a:hover{color:var(--red);}
+  form.gate input{
+    grid-column:span 1; padding:13px 14px; border:1px solid var(--gray-line);
+    background:var(--white); color:var(--navy-ink); border-radius:2px;
+    font-family:'Inter',sans-serif; font-size:15px;
+  }
+  form.gate button{
+    grid-column:span 2; margin-top:6px; padding:14px 20px; background:var(--sc-blue); color:var(--white);
+    border:none; border-radius:2px; font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px;
+    letter-spacing:.03em; text-transform:uppercase; cursor:pointer;
+  }
+  form.gate button:hover{background:#0a3d6e;}
+  form.gate input:focus, form.gate button:focus-visible{outline:2px solid var(--gold); outline-offset:1px;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:44px 40px 54px; text-align:center; color:var(--gray-slate); font-size:13px;}
+  footer .shoe{margin-bottom:14px;}
+  footer .shoe img{display:block; width:28px; height:28px; object-fit:contain; margin:0 auto;}
+  footer .consent-note{
+    max-width:560px; margin:0 auto 16px; font-size:11.5px; line-height:1.6; color:#8A93A0;
+    display:flex; gap:8px; align-items:flex-start; text-align:left;
+    text-transform:none; font-weight:400; letter-spacing:normal;
+  }
+  footer .consent-note input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  footer .consent-note a{color:#8A93A0; text-decoration:underline;}
+  footer .consent-note a:hover{color:var(--red);}
+  footer .footer-links{margin-bottom:10px;}
+  footer .footer-links a{color:var(--gray-slate); text-decoration:underline; font-size:12.5px;}
+  footer .footer-links a:hover{color:var(--red);}
+
+  @media (max-width:860px){
+    nav{position:relative; padding:20px 24px;}
+    .nav-logo img{height:64px;}
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--sc-blue); padding:8px 24px 20px; box-shadow:0 12px 24px rgba(0,0,0,.25);
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:16px;}
+    .navlinks a.active{border-bottom:1px solid var(--red);}
+  }
+  @media (max-width:640px){
+    form.gate{grid-template-columns:1fr;}
+    form.gate input, form.gate button{grid-column:span 1;}
+  }
+</style>
+</head>
+<body>
+
+<header class="pagehead">
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="SCEAFinalLogoWhite.png" alt="South Carolina Equine Alliance">
+    </a>
+    <div class="navlinks">
+      <a href="about.html">About</a>
+      <a href="media.html">Media</a>
+      <a href="events.html">Events</a>
+      <a href="get-involved.html" class="active">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="pagehead-inner">
+    <h1 class="pagetitle">Get Involved</h1>
+    <p>Join the coalition or stay in the loop &mdash; there's a place here for everyone in South Carolina's horse industry.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="involved-section">
+
+    <a class="member-cta" href="join.html">Become a Member of the Alliance</a>
+    <p class="member-cta-sub">Full membership application: $20 annual dues individuals; $60 annual dues groups and businesses; $200 annual dues Founding Sponsors.</p>
+
+    <div class="signup-divider"><span>or stay in the loop</span></div>
+
+    <h2>Stay Up to Date on the Latest News About the Equine Industry in South Carolina!</h2>
+    <p class="lede">Get to the gate first. Sign up for SCEA news.</p>
+    <form class="gate" onsubmit="return false;">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <input type="text" placeholder="Zip Code" required>
+      <input type="tel" placeholder="Cell Phone" required>
+      <label class="form-consent">
+        <input type="checkbox" name="sms_optin" required>
+        <span>By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View <a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a> for more info.</span>
+      </label>
+      <button type="submit">Get to the Gate</button>
+    </form>
+
+  </section>
+</div>
+
+<footer>
+  <div class="shoe" aria-hidden="true">
+    <img src="horseshoe.png" alt="">
+  </div>
+  <p class="consent-note">By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View Mobile Terms of Service &amp; Privacy Policy for more info.</p>
+  <div class="footer-links"><a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a></div>
+  <div>&copy; 2026 South Carolina Equine Alliance. All rights reserved.</div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById("navToggle");
+  const navLinksEl = document.querySelector(".navlinks");
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinksEl.classList.toggle("open");
+    navToggle.classList.toggle("active", isOpen);
+    navToggle.setAttribute("aria-expanded", isOpen);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — South Carolina Equine Alliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sc-blue: #042E56;
+    --navy-ink: #16233A;
+    --cream: #FAF8F4;
+    --white: #FFFFFF;
+    --gold: #A9803D;
+    --red: #DD2417;
+    --gray-slate: #626C7A;
+    --gray-line: #DCE0E5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--navy-ink);
+    font-family:'Inter', system-ui, sans-serif; line-height:1.6; font-size:16.5px;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- Nav ---------- */
+  header.pagehead{background:var(--sc-blue); padding-bottom:70px;}
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:26px 48px; box-sizing:border-box;
+  }
+  .nav-logo{display:flex; align-items:center; text-decoration:none;}
+  .nav-logo img{height:150px; width:auto; object-fit:contain; display:block;}
+  .navlinks{display:flex; gap:34px;}
+  .navlinks a{color:rgba(255,255,255,.85); text-decoration:none; font-size:14.5px; font-weight:500;}
+  .navlinks a:hover, .navlinks a.active{color:var(--white);}
+  .navlinks a.active{border-bottom:2px solid var(--red); padding-bottom:4px;}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0; z-index:30;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--white); border-radius:1px; transition:transform .2s ease, opacity .2s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .pagehead-inner{padding:20px 48px 0; color:var(--white);}
+  h1.pagetitle{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:clamp(38px,4.4vw,56px);
+    margin:0 0 14px;
+  }
+  .pagehead-inner p{color:#C9D6E5; font-size:18px; max-width:560px; margin:0;}
+
+  /* ---------- Intro copy ---------- */
+  section.intro{padding:72px 0 48px;}
+  .intro-copy{max-width:760px;}
+  .intro-copy p{color:#3B4657; margin:0 0 20px; font-size:17px;}
+  .intro-copy em{font-style:italic;}
+  .intro-copy a{color:var(--sc-blue); font-weight:600; text-decoration:underline;}
+  .intro-copy a:hover{color:var(--red);}
+
+  /* ---------- Board ---------- */
+  section.board{padding:48px 0 96px; border-top:1px solid var(--gray-line);}
+  section.board h2{
+    font-family:'Playfair Display', serif; font-weight:800; font-size:30px; color:var(--sc-blue);
+    margin:0 0 44px;
+  }
+  .board-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:44px;}
+  .board-card .headshot{
+    aspect-ratio:1/1; overflow:hidden; border:1px solid var(--gray-line); margin-bottom:20px;
+    background:var(--white);
+  }
+  .board-card h3{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:20px; color:var(--navy-ink);
+    margin:0 0 12px;
+  }
+  .board-card p{color:#3B4657; font-size:15px; margin:0;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:44px 40px 54px; text-align:center; color:var(--gray-slate); font-size:13px;}
+  footer .shoe{margin-bottom:14px;}
+  footer .shoe img{display:block; width:28px; height:28px; object-fit:contain; margin:0 auto;}
+  footer .consent-note{
+    max-width:560px; margin:0 auto 16px; font-size:11.5px; line-height:1.6; color:#8A93A0;
+    display:flex; gap:8px; align-items:flex-start; text-align:left;
+    text-transform:none; font-weight:400; letter-spacing:normal;
+  }
+  footer .consent-note input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  footer .consent-note a{color:#8A93A0; text-decoration:underline;}
+  footer .consent-note a:hover{color:var(--red);}
+  footer .footer-links{margin-bottom:10px;}
+  footer .footer-links a{color:var(--gray-slate); text-decoration:underline; font-size:12.5px;}
+  footer .footer-links a:hover{color:var(--red);}
+
+  @media (max-width:900px){
+    .board-grid{grid-template-columns:1fr 1fr; gap:32px;}
+  }
+  @media (max-width:860px){
+    nav{position:relative; padding:20px 24px;}
+    .nav-logo img{height:64px;}
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--sc-blue); padding:8px 24px 20px; box-shadow:0 12px 24px rgba(0,0,0,.25);
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:16px;}
+    .navlinks a.active{border-bottom:1px solid var(--red);}
+  }
+  @media (max-width:640px){
+    .board-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="pagehead">
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="SCEAFinalLogoWhite.png" alt="South Carolina Equine Alliance">
+    </a>
+    <div class="navlinks">
+      <a href="about.html" class="active">About</a>
+      <a href="media.html">Media</a>
+      <a href="events.html">Events</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="pagehead-inner">
+    <h1 class="pagetitle">About the SCEA</h1>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="intro">
+    <div class="intro-copy">
+      <p>The South Carolina Equine Alliance is a coalition of groups and individuals dedicated to promoting and growing the horse industry here in our state.</p>
+
+      <p>With all of our natural advantages, and our deep historical ties to the industry, it&rsquo;s time South Carolina horse interests united to tell our story and take our rightful place alongside states like Virginia and Kentucky. After all, horses were racing in South Carolina 141 years <em>before</em> the first running of The Kentucky Derby.</p>
+
+      <p>The SCEA unites interests in the state to advocate for the horse industry and help it grow in the years ahead. This is a coalition that runs from farmers to jockeys; from fans of The Carolina Cup in Camden to vendors at Aiken&rsquo;s Triple Crown. We know that the horse industry is a major job creator and tax revenue generator in the Palmetto State&mdash;and it deserves more support and more champions.</p>
+
+      <p>South Carolina should be an equine industry leader. We have a climate conducive to year-round racing and training. Our location along I-95 on the Eastern Seaboard puts us within easy traveling distance for horse racing fans up and down the coast. Our historical connections to the horse industry, and racing and competing in all its forms, is unmatched.</p>
+
+      <p>It&rsquo;s time to highlight the fun, the jobs, and the tax revenue the horse industry brings to South Carolina! Please <a href="contact.html">contact us</a> to join the Alliance, and <a href="index.html#signup">sign up for our emails and texts</a> to stay up to date on all of our activities!</p>
+    </div>
+  </section>
+
+  <section class="board">
+    <h2>Meet the Board of the South Carolina Equine Alliance</h2>
+    <div class="board-grid">
+
+      <div class="board-card">
+        <div class="headshot"><img src="GordonLawson.png" alt="Gordon Lawson"></div>
+        <h3>Gordon Lawson</h3>
+        <p>Gordon Lawson serves as the Chairman of the Aiken Horse Park (Bruce&rsquo;s Field). He is committed to growing all equestrian disciplines throughout the state. Gordon is the CEO of PeopleScape &mdash; an AI company transforming human capital management for global organizations. He is a former naval officer and graduate of the US Naval Academy.</p>
+      </div>
+
+      <div class="board-card">
+        <div class="headshot"><img src="ArchKingsley.png" alt="Arch Kingsley"></div>
+        <h3>Arch Kingsley</h3>
+        <p>Arch Kingsley is a National Champion Steeplechase jockey who has lived his life for the care and competition of Thoroughbred horses. As a race horse trainer he has competed successfully at the highest level training multiple stakes winners, specifically campaigning Eclipse Award Champion Merry Maker, as well as Eclipse finalists Show Court, and L&rsquo;Imperator. Arch has practiced as a professional blacksmith over two decades, and his expertise and travels have taken him to work for top connections at racing jurisdictions around the world, and to most of America&rsquo;s most storied racetracks. Arch well understands the economics of the global thoroughbred marketplace and wants to see South Carolina reclaim its prominence on the world stage. Arch has a farm in Camden, SC where he lives with his wife and daughter with a successful business dedicated to the development of the elite Thoroughbred athlete.</p>
+      </div>
+
+      <div class="board-card">
+        <div class="headshot"><img src="TravisDurr.png" alt="Travis Durr"></div>
+        <h3>Travis Durr</h3>
+        <p>Travis Durr&rsquo;s interest in horses traces back to his grandfather and father, who both raced Quarter Horses. At the age of 12, he rode races on bush tracks in Georgia and South and North Carolina. As his family transitioned to Thoroughbreds, Durr began breaking young horses and took over the family business in 1995. He began breaking horses in St. George, South Carolina, for local clients in 2007. Travis then joined the Webb Carroll Training Center in Matthews, South Carolina. In October 2016, Durr and his wife Ashley then purchased the training center from Carroll.</p>
+        <p style="margin-top:12px;">Travis Durr Training Center has since become a powerhouse for transforming raw talent into racing legends. With first-class facilities, expert trainers, and an unyielding commitment to excellence, they guide every horse to its peak potential. From early conditioning to race-day readiness, Travis Durr&rsquo;s team lays down the foundation for champions, ensuring that every Thoroughbred leaving the center is built to dominate the track.</p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="shoe" aria-hidden="true">
+    <img src="horseshoe.png" alt="">
+  </div>
+  <p class="consent-note">By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View Mobile Terms of Service &amp; Privacy Policy for more info.</p>
+  <div class="footer-links"><a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a></div>
+  <div>&copy; 2026 South Carolina Equine Alliance. All rights reserved.</div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById("navToggle");
+  const navLinksEl = document.querySelector(".navlinks");
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinksEl.classList.toggle("open");
+    navToggle.classList.toggle("active", isOpen);
+    navToggle.setAttribute("aria-expanded", isOpen);
+  });
+</script>
+
+</body>
+</html>

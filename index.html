@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>South Carolina Equine Alliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sc-blue: #042E56;     /* primary */
+    --navy-ink: #16233A;    /* dark navy variant / body ink */
+    --cream: #FAF8F4;
+    --white: #FFFFFF;
+    --gold: #A9803D;
+    --red: #DD2417;
+    --gray-slate: #626C7A;
+    --gray-line: #DCE0E5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--navy-ink);
+    font-family:'Inter', system-ui, sans-serif; line-height:1.6; font-size:16.5px;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- Preloader ---------- */
+  #loader{
+    position:fixed; inset:0; background:var(--sc-blue); z-index:999;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    transition:opacity .5s ease, visibility .5s ease;
+  }
+  #loader.done{opacity:0; visibility:hidden;}
+  #loader img{width:64px; height:64px; animation:spin 1s linear infinite;}
+  #loader .gait-label{
+    margin-top:14px; font-family:'Inter',sans-serif; font-weight:500; letter-spacing:.22em;
+    color:#C9D6E5; font-size:11.5px; text-transform:uppercase;
+  }
+  @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+  @media (prefers-reduced-motion: reduce){ #loader img{animation:none !important;} }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:absolute; top:0; left:0; right:0; z-index:10;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:26px 48px; box-sizing:border-box;
+  }
+  .nav-logo{display:flex; align-items:center; text-decoration:none;}
+  .nav-logo img, .nav-logo-svg{
+    height:150px; width:auto; object-fit:contain; display:block;
+  }
+  .nav-logo img.logo-mobile{display:none;}
+  .navlinks{display:flex; gap:34px;}
+  .navlinks a{
+    color:rgba(255,255,255,.85); text-decoration:none; font-size:14.5px; font-weight:500;
+  }
+  .navlinks a:hover{color:var(--white);}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0; z-index:30;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--white); border-radius:1px; transition:transform .2s ease, opacity .2s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; height:100vh; min-height:640px; color:var(--white); overflow:hidden;
+  }
+  .hero-bg{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover;}
+  .hero::after{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:rgba(4,46,86,.38);
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(200deg, rgba(4,46,86,.55) 0%, rgba(4,46,86,0) 55%);
+  }
+  .hero-inner{
+    position:relative; z-index:2; height:100%; padding:0 48px; box-sizing:border-box;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  h1.wordmark{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:clamp(44px,6.6vw,78px);
+    margin:0 0 20px; max-width:760px; line-height:1.06;
+  }
+  .hero-inner p{
+    font-family:'Inter',sans-serif; font-size:19px; font-weight:400; color:#DCE5EF; max-width:500px; margin:0 0 30px;
+  }
+  .cta-btn{
+    display:inline-block; background:var(--red); color:var(--white);
+    padding:14px 26px; border-radius:2px; text-decoration:none;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px;
+    letter-spacing:.03em; text-transform:uppercase; width:fit-content;
+  }
+  .cta-btn:hover{background:#b81d13;}
+
+  /* ---------- Sections ---------- */
+  section{padding:96px 0;}
+  section.divider-top{border-top:1px solid var(--gray-line);}
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;}
+  .split.reverse .split-text{order:2;}
+  .split.reverse .split-media{order:1;}
+  h2{
+    font-family:'Playfair Display', serif; font-weight:800; font-size:32px;
+    margin:0 0 22px; line-height:1.18; color:var(--sc-blue);
+  }
+  p{margin:0 0 16px; color:#3B4657; max-width:520px; font-size:16.5px;}
+  .split-media{
+    aspect-ratio:4/5; overflow:hidden; border:1px solid var(--gray-line); position:relative;
+  }
+  .heritage-stat{display:flex; gap:44px; margin:28px 0 0;}
+  .heritage-stat .num{font-family:'Playfair Display',serif; font-weight:900; font-size:42px; color:var(--sc-blue); line-height:1;}
+  .heritage-stat .num span{
+    display:block; font-family:'Inter',sans-serif; font-weight:600; font-size:12px; letter-spacing:.1em;
+    color:var(--gray-slate); margin-top:6px; text-transform:uppercase;
+  }
+
+  /* ---------- Impact stats ---------- */
+  section.impact{
+    background:var(--sc-blue); padding:88px 0; text-align:center; color:var(--white);
+    position:relative; overflow:hidden;
+  }
+  .impact-watermark{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.08;
+    pointer-events:none;
+  }
+  section.impact .wrap{position:relative; z-index:1;}
+  section.impact h2{
+    font-family:'Playfair Display',serif; font-weight:800; font-size:clamp(26px,3.4vw,38px); color:var(--white);
+    max-width:680px; margin:0 auto 60px;
+  }
+  .impact-stats{display:flex; justify-content:center; gap:0; flex-wrap:wrap;}
+  .impact-stat{
+    flex:1 1 220px; padding:0 36px; position:relative;
+  }
+  .impact-stat + .impact-stat::before{
+    content:""; position:absolute; left:0; top:8px; bottom:8px; width:1px; background:rgba(255,255,255,.18);
+  }
+  .impact-icon{width:34px; height:34px; margin:0 auto 18px; color:var(--gold);}
+  .impact-icon svg{width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.5;}
+  .impact-num{
+    font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(38px,5vw,58px); color:var(--gold);
+    line-height:1;
+  }
+  .impact-label{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13px; letter-spacing:.05em; text-transform:uppercase;
+    color:#C9D6E5; margin-top:14px; line-height:1.5;
+  }
+  .impact-source{
+    margin:52px auto 0; max-width:600px; font-size:13.5px; color:#9FB0C4;
+  }
+  .impact-source em{font-style:italic;}
+  .impact-source a{color:var(--gold); font-weight:600; text-decoration:none; margin-left:4px;}
+  .impact-source a:hover{text-decoration:underline;}
+
+  @media (max-width:700px){
+    .impact-stats{flex-direction:column; gap:36px;}
+    .impact-stat + .impact-stat::before{display:none;}
+  }
+
+  /* member carousel */
+  .segments-head{max-width:none; margin-bottom:44px;}
+  .segments-head p{max-width:none;}
+  .carousel-wrap{position:relative;}
+  .carousel-track{
+    display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory;
+    scroll-behavior:smooth; padding-bottom:6px; -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .carousel-track::-webkit-scrollbar{display:none;}
+  .carousel-slide{
+    flex:0 0 calc(25% - 15px); scroll-snap-align:start; aspect-ratio:3/4; position:relative;
+    overflow:hidden; border-radius:4px; background:var(--sc-blue);
+  }
+  .carousel-slide > img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .carousel-slide::after{
+    content:""; position:absolute; inset:0;
+    background:rgba(169,128,61,.78);
+  }
+  .member-badge{
+    position:absolute; inset:0; z-index:2; display:flex; align-items:center; justify-content:center;
+  }
+  .member-badge .badge-circle{
+    width:70%; max-width:170px; border-radius:14px; background:rgba(250,248,244,.96);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;
+    padding:20px 16px; box-shadow:0 8px 24px rgba(0,0,0,.25);
+  }
+  .member-badge img{width:100%; height:auto; object-fit:contain;}
+  .member-badge .badge-label{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gray-slate);
+  }
+  .member-badge .sponsor-tag{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:9px; letter-spacing:.07em;
+    text-transform:uppercase; color:var(--white); background:var(--red);
+    padding:3px 9px; border-radius:20px; margin-top:2px;
+  }
+  .carousel-nav{display:flex; gap:10px; margin-top:22px; justify-content:flex-end;}
+  .carousel-btn{
+    width:42px; height:42px; border-radius:50%; border:1px solid var(--gray-line); background:var(--white);
+    color:var(--sc-blue); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    font-size:16px; transition:background .15s ease;
+  }
+  .carousel-btn:hover{background:var(--cream); border-color:var(--sc-blue);}
+
+  /* ---------- Signup ---------- */
+  section.signup{background:var(--sc-blue); color:var(--white); padding:88px 0; text-align:center;}
+  section.signup .wrap{max-width:700px;}
+  section.signup h2{color:var(--white); max-width:680px; margin-left:auto; margin-right:auto;}
+  section.signup p.lede{color:#C9D6E5; font-size:18px; max-width:480px; font-weight:400; margin-left:auto; margin-right:auto;}
+  form.gate{display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:560px; margin:30px auto 0;}
+  .form-consent{
+    grid-column:span 2; display:flex; gap:10px; align-items:flex-start; text-align:left;
+    font-size:12.5px; line-height:1.6; color:rgba(255,255,255,.65); margin-top:2px;
+  }
+  .form-consent input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  .form-consent a{color:rgba(255,255,255,.85); text-decoration:underline;}
+  .form-consent a:hover{color:var(--gold);}
+  form.gate input{
+    grid-column:span 1; padding:13px 14px; border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.06); color:var(--white); border-radius:2px;
+    font-family:'Inter',sans-serif; font-size:14.5px;
+  }
+  form.gate input::placeholder{color:#9FB0C4;}
+  form.gate button{
+    grid-column:span 2; margin-top:6px; padding:14px 20px; background:var(--red); color:var(--white);
+    border:none; border-radius:2px; font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px;
+    letter-spacing:.03em; text-transform:uppercase; cursor:pointer;
+  }
+  form.gate button:hover{background:#b81d13;}
+  form.gate button:focus-visible, form.gate input:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:44px 40px 54px; text-align:center; color:var(--gray-slate); font-size:13px;}
+  footer .shoe{margin-bottom:14px;}
+  footer .shoe img{display:block; width:28px; height:28px; object-fit:contain; margin:0 auto;}
+  footer .consent-note{
+    max-width:560px; margin:0 auto 16px; font-size:11.5px; line-height:1.6; color:#8A93A0;
+    display:flex; gap:8px; align-items:flex-start; text-align:left;
+    text-transform:none; font-weight:400; letter-spacing:normal;
+  }
+  footer .consent-note input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  footer .consent-note a{color:#8A93A0; text-decoration:underline;}
+  footer .consent-note a:hover{color:var(--red);}
+  footer .footer-links{margin-bottom:10px;}
+  footer .footer-links a{color:var(--gray-slate); text-decoration:underline; font-size:12.5px;}
+  footer .footer-links a:hover{color:var(--red);}
+
+  @media (max-width:820px){
+    nav{position:relative; background:var(--sc-blue); padding:20px 24px;}
+    .nav-logo img, .nav-logo-svg{height:64px;}
+    .nav-logo img.logo-desktop{display:none;}
+    .nav-logo img.logo-mobile{display:block;}
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--sc-blue); padding:8px 24px 20px; box-shadow:0 12px 24px rgba(0,0,0,.25);
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:16px;}
+
+    .hero{height:100vh; min-height:560px;}
+    .hero-inner{padding:0 24px;}
+
+    .split{grid-template-columns:1fr; gap:32px;}
+    .split.reverse .split-text, .split.reverse .split-media{order:initial;}
+    .carousel-slide{flex-basis:calc(50% - 10px);}
+    form.gate{grid-template-columns:1fr;}
+    form.gate input, form.gate button{grid-column:span 1;}
+  }
+  @media (max-width:520px){
+    .carousel-slide{flex-basis:80%;}
+  }
+</style>
+</head>
+<body>
+
+<div id="loader" class="gait-walk">
+  <img src="horseshoewhite.png" alt="">
+  <div class="gait-label">Off to the races&hellip;</div>
+</div>
+
+<header class="hero">
+  <video class="hero-bg" id="heroVideo" muted loop playsinline preload="none"
+         poster="https://images.unsplash.com/photo-1694446942933-bc29e37df9f3?fm=jpg&q=80&w=2400&auto=format&fit=crop">
+  </video>
+  <img class="hero-bg" id="heroStaticImg" style="display:none;"
+       src="https://images.unsplash.com/photo-1694446942933-bc29e37df9f3?fm=jpg&q=80&w=2400&auto=format&fit=crop" alt="">
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img class="logo-desktop" src="SCEAFinalLogo.png" alt="South Carolina Equine Alliance">
+      <img class="logo-mobile" src="SCEAFinalLogoWhite.png" alt="South Carolina Equine Alliance">
+    </a>
+    <div class="navlinks">
+      <a href="about.html">About</a>
+      <a href="media.html">Media</a>
+      <a href="events.html">Events</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="hero-inner">
+    <h1 class="wordmark">South Carolina<br>Equine Alliance</h1>
+    <p>Dedicated to supporting and promoting South Carolina&rsquo;s horse industry.</p>
+    <a class="cta-btn" href="#signup">Get to the Gate</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="heritage">
+    <div class="split">
+      <div class="split-text">
+        <h2>Nearly 300 Years in the Making</h2>
+        <p>Horses have been a crucial part of South Carolina&rsquo;s economy and heritage since the very first race was run here in 1734. The Palmetto State has a nearly 300-year history with the horse industry and the partnership continues to flourish to this day!</p>
+        <div class="heritage-stat">
+          <div class="num">1734<span>First race run</span></div>
+          <div class="num">290+<span>Years of partnership</span></div>
+        </div>
+      </div>
+      <div class="split-media">
+        <img src="horsehome.jpg" alt="Horse on a South Carolina farm">
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<section class="impact">
+  <img class="impact-watermark" src="horsestat.jpg" alt="">
+  <div class="wrap">
+    <h2>A Billion-Dollar Industry, Right Here in South Carolina</h2>
+    <div class="impact-stats">
+      <div class="impact-stat">
+        <div class="impact-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 12l2-7h14l2 7M3 12v7a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-7M3 12h18M9 12v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="impact-num" data-prefix="$" data-target="1.9" data-decimals="1" data-suffix="B">$0.0B</div>
+        <div class="impact-label">Total Annual<br>Economic Impact</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-icon">
+          <svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3.2" stroke-linecap="round"/><path d="M2.5 20c0-3.6 2.5-6 5.5-6s5.5 2.4 5.5 6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="9" r="2.6" stroke-linecap="round"/><path d="M14.8 14.3c2.4.3 4.2 2.3 4.7 5.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="impact-num" data-target="28545" data-format="int">0</div>
+        <div class="impact-label">Jobs Supported<br>Statewide</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-linecap="round"/><path d="M12 7.5v9M9.3 15c.3 1 1.3 1.6 2.7 1.6 1.7 0 2.8-.8 2.8-2s-1-1.7-2.8-2.1c-1.8-.4-2.7-1-2.7-2.1 0-1.2 1.1-2 2.7-2 1.4 0 2.4.6 2.7 1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="impact-num" data-prefix="$" data-target="1.0" data-decimals="1" data-suffix="B+">$0.0B+</div>
+        <div class="impact-label">In Labor Income for<br>South Carolinians</div>
+      </div>
+    </div>
+    <p class="impact-source">
+      Source: <em>2019 Equine Impact Study</em>, South Carolina Department of Agriculture &amp; the University of South Carolina.
+      <a href="https://agriculture.sc.gov/wp-content/uploads/2019/03/2019EquineImpactStudy.pdf" target="_blank" rel="noopener">Read the full report &rarr;</a>
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section id="members" class="divider-top">
+    <div class="segments-head">
+      <h2>Our Members</h2>
+      <p>SCEA members represent every segment of our industry: from thoroughbred breeders to harness racers to the farmers who grow our feed to fans of the Carolina Cup!</p>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel-track" id="memberTrack">
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1566068256639-2f046b164a98?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Aiken Horse Park">
+          <div class="member-badge"><div class="badge-circle">
+            <img src="AikenHorsePark.png" alt="Aiken Horse Park">
+            <span class="badge-label">Aiken Horse Park</span>
+            <span class="sponsor-tag">Founding Sponsor</span>
+          </div></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1573751055635-a0ad5937fd37?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Camden Racing">
+          <div class="member-badge"><div class="badge-circle">
+            <img src="CamdenRacing.png" alt="Camden Racing">
+            <span class="badge-label">Camden Racing</span>
+            <span class="sponsor-tag">Founding Sponsor</span>
+          </div></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1573751056139-2ab65b6b03be?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Aiken Steeplechase">
+          <div class="member-badge"><div class="badge-circle">
+            <img src="AikenSteeple.png" alt="Aiken Steeplechase">
+            <span class="badge-label">Aiken Steeplechase</span>
+            <span class="sponsor-tag">Founding Sponsor</span>
+          </div></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1450052590821-8bf91254a353?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Steeplechase of Charleston">
+          <div class="member-badge"><div class="badge-circle">
+            <img src="SteepleCharleston.png" alt="Steeplechase of Charleston">
+            <span class="badge-label">Steeplechase of Charleston</span>
+            <span class="sponsor-tag">Founding Sponsor</span>
+          </div></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1611540253975-19c1f87a8555?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="South Carolina Jockey Club">
+          <div class="member-badge"><div class="badge-circle">
+            <img src="SouthCarolinaJockeyClub.png" alt="South Carolina Jockey Club">
+            <span class="badge-label">South Carolina Jockey Club</span>
+            <span class="sponsor-tag">Founding Sponsor</span>
+          </div></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1576692194458-ea3f97b227af?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Member horse farm">
+          <div class="member-badge"><div class="badge-circle">
+            <img src="finallogomark.png" alt="SCEA">
+            <span class="badge-label">Member Logo</span>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="memberPrev" aria-label="Previous">&#8592;</button>
+        <button class="carousel-btn" id="memberNext" aria-label="Next">&#8594;</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<section id="signup" class="signup">
+  <div class="wrap">
+    <h2>Stay Up to Date on the Latest News About the Equine Industry in South Carolina!</h2>
+    <p class="lede">Get to the gate first. Sign up for SCEA news.</p>
+    <form class="gate" onsubmit="return false;">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <input type="text" placeholder="Zip Code" required>
+      <input type="tel" placeholder="Cell Phone" required>
+      <label class="form-consent">
+        <input type="checkbox" name="sms_optin" required>
+        <span>By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View <a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a> for more info.</span>
+      </label>
+      <button type="submit">Get to the Gate</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="shoe" aria-hidden="true">
+    <img src="horseshoe.png" alt="">
+  </div>
+  <p class="consent-note">By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View Mobile Terms of Service &amp; Privacy Policy for more info.</p>
+  <div class="footer-links"><a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a></div>
+  <div>&copy; 2026 South Carolina Equine Alliance. All rights reserved.</div>
+</footer>
+
+<script>
+  // Mobile gets a static image only — the video source is never attached, so it's
+  // never downloaded. Desktop gets the video, added dynamically so mobile skips it entirely.
+  const heroVideo = document.getElementById("heroVideo");
+  const heroStaticImg = document.getElementById("heroStaticImg");
+  const isMobileHero = () => window.matchMedia("(max-width:820px)").matches;
+
+  function setupHeroMedia(){
+    if (isMobileHero()) {
+      heroVideo.style.display = "none";
+      heroStaticImg.style.display = "block";
+      heroVideo.pause();
+    } else {
+      heroStaticImg.style.display = "none";
+      heroVideo.style.display = "block";
+      if (!heroVideo.querySelector("source")) {
+        const source = document.createElement("source");
+        source.src = "horsehero.mp4";
+        source.type = "video/mp4";
+        heroVideo.appendChild(source);
+        heroVideo.load();
+      }
+      heroVideo.play().catch(() => {});
+    }
+  }
+  setupHeroMedia();
+  window.addEventListener("resize", setupHeroMedia);
+
+  const navToggle = document.getElementById("navToggle");
+  const navLinksEl = document.querySelector(".navlinks");
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinksEl.classList.toggle("open");
+    navToggle.classList.toggle("active", isOpen);
+    navToggle.setAttribute("aria-expanded", isOpen);
+  });
+
+  const loader = document.getElementById('loader');
+  setTimeout(() => loader.classList.add('done'), 1100);
+
+  const track = document.getElementById('memberTrack');
+  const prevBtn = document.getElementById('memberPrev');
+  const nextBtn = document.getElementById('memberNext');
+  function scrollAmount(){
+    const slide = track.querySelector('.carousel-slide');
+    return slide ? slide.getBoundingClientRect().width + 20 : 300;
+  }
+  prevBtn.addEventListener('click', () => track.scrollBy({left: -scrollAmount(), behavior:'smooth'}));
+  nextBtn.addEventListener('click', () => track.scrollBy({left: scrollAmount(), behavior:'smooth'}));
+
+  // Count-up animation for the impact stats
+  const impactNums = document.querySelectorAll('.impact-num');
+  const animateNum = (el) => {
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const isInt = el.dataset.format === 'int';
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now){
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = target * eased;
+      const display = isInt
+        ? Math.round(value).toLocaleString('en-US')
+        : value.toFixed(decimals);
+      el.textContent = prefix + display + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  };
+  const impactObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        animateNum(entry.target);
+        impactObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  impactNums.forEach(el => impactObserver.observe(el));
+</script>
+
+</body>
+</html>

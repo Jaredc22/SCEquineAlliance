@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media — South Carolina Equine Alliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sc-blue: #042E56;
+    --navy-ink: #16233A;
+    --cream: #FAF8F4;
+    --white: #FFFFFF;
+    --gold: #A9803D;
+    --red: #DD2417;
+    --gray-slate: #626C7A;
+    --gray-line: #DCE0E5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--navy-ink);
+    font-family:'Inter', system-ui, sans-serif; line-height:1.6; font-size:16.5px;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- Nav ---------- */
+  header.pagehead{background:var(--sc-blue); padding-bottom:70px;}
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:26px 48px; box-sizing:border-box;
+  }
+  .nav-logo{display:flex; align-items:center; text-decoration:none;}
+  .nav-logo img{height:150px; width:auto; object-fit:contain; display:block;}
+  .navlinks{display:flex; gap:34px;}
+  .navlinks a{color:rgba(255,255,255,.85); text-decoration:none; font-size:14.5px; font-weight:500;}
+  .navlinks a:hover, .navlinks a.active{color:var(--white);}
+  .navlinks a.active{border-bottom:2px solid var(--red); padding-bottom:4px;}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0; z-index:30;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--white); border-radius:1px; transition:transform .2s ease, opacity .2s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .pagehead-inner{padding:20px 48px 0; color:var(--white);}
+  .pagehead-inner .eyebrow{
+    font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+    font-size:12.5px; color:var(--gold); margin:0 0 12px;
+  }
+  h1.pagetitle{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:clamp(38px,4.4vw,56px);
+    margin:0 0 14px;
+  }
+  .pagehead-inner p{color:#C9D6E5; font-size:18px; max-width:none; margin:0;}
+
+  /* ---------- Grid ---------- */
+  section.grid-section{padding:72px 0 96px;}
+  .grid-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:40px; flex-wrap:wrap;}
+  .grid-head h2{
+    font-family:'Playfair Display', serif; font-weight:800; font-size:30px; color:var(--sc-blue); margin:0;
+  }
+  .grid-head p{color:var(--gray-slate); font-size:15px; margin:0; max-width:420px;}
+
+  .story-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;}
+  .story-card{display:flex; flex-direction:column;}
+  .story-photo{
+    aspect-ratio:16/10; overflow:hidden; border:1px solid var(--gray-line); margin-bottom:16px;
+    position:relative; background:var(--sc-blue);
+  }
+  .story-photo img.bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .story-photo::after{content:""; position:absolute; inset:0; background:rgba(4,46,86,.82);}
+  .pub-badge{
+    position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .pub-badge .badge-panel{
+    background:rgba(250,248,244,.97); border-radius:8px; padding:16px 22px; max-width:78%;
+    box-shadow:0 6px 18px rgba(0,0,0,.22); display:flex; align-items:center; justify-content:center;
+  }
+  .pub-badge .badge-panel.on-dark{
+    background:transparent; box-shadow:none; padding:0; max-width:70%;
+  }
+  .pub-badge img{width:100%; max-width:170px; height:auto; max-height:44px; object-fit:contain; display:block;}
+  .pub-badge .badge-panel.on-dark img{max-height:38px; filter:drop-shadow(0 1px 3px rgba(0,0,0,.4));}
+  .story-card h3{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:17px; color:var(--navy-ink);
+    margin:0 0 10px; line-height:1.32;
+  }
+  .story-link{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--red); text-decoration:none; display:inline-flex; align-items:center; gap:6px; margin-top:auto;
+  }
+  .story-link:hover{color:#b81d13;}
+  .story-link .arrow{transition:transform .15s ease;}
+  .story-link:hover .arrow{transform:translateX(3px);}
+
+  /* ---------- Footer ---------- */
+  footer{padding:44px 40px 54px; text-align:center; color:var(--gray-slate); font-size:13px;}
+  footer .shoe{margin-bottom:14px;}
+  footer .shoe img{display:block; width:28px; height:28px; object-fit:contain; margin:0 auto;}
+  footer .consent-note{
+    max-width:560px; margin:0 auto 16px; font-size:11.5px; line-height:1.6; color:#8A93A0;
+    display:flex; gap:8px; align-items:flex-start; text-align:left;
+    text-transform:none; font-weight:400; letter-spacing:normal;
+  }
+  footer .consent-note input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  footer .consent-note a{color:#8A93A0; text-decoration:underline;}
+  footer .consent-note a:hover{color:var(--red);}
+  footer .footer-links{margin-bottom:10px;}
+  footer .footer-links a{color:var(--gray-slate); text-decoration:underline; font-size:12.5px;}
+  footer .footer-links a:hover{color:var(--red);}
+
+  @media (max-width:900px){
+    .story-grid{grid-template-columns:repeat(2, 1fr);}
+  }
+  @media (max-width:860px){
+    nav{position:relative; padding:20px 24px;}
+    .nav-logo img{height:64px;}
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--sc-blue); padding:8px 24px 20px; box-shadow:0 12px 24px rgba(0,0,0,.25);
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:16px;}
+    .navlinks a.active{border-bottom:1px solid var(--red);}
+  }
+  @media (max-width:640px){
+    .story-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="pagehead">
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="SCEAFinalLogoWhite.png" alt="South Carolina Equine Alliance">
+    </a>
+    <div class="navlinks">
+      <a href="about.html">About</a>
+      <a href="media.html" class="active">Media</a>
+      <a href="events.html">Events</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="pagehead-inner">
+    <h1 class="pagetitle">Media</h1>
+    <p>The latest stories, events, and happenings across South Carolina's horse industry.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="grid-section">
+    <div class="grid-head">
+      <h2>Latest Stories</h2>
+    </div>
+    <div class="story-grid">
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel"><img src="ChronHorse.png" alt="Chronicle of the Horse"></div></div>
+        </div>
+        <h3>Twisting Cross-Country Proves Decisive As Dutton Wins Bruce&rsquo;s Field Showcase</h3>
+        <a class="story-link" href="https://chronofhorse.com/en/article/Twisting-CrossCountry-Proves-Decisive-As-Dutton-Wins-Bruces-Field-Showcase/" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel on-dark"><img src="wach-logo.svg" alt="WACH"></div></div>
+        </div>
+        <h3>Carolina Cup returns to Camden, drawing thousands for racing and Southern tradition</h3>
+        <a class="story-link" href="https://wach.com/news/local/carolina-cup-returns-to-camden-drawing-thousands-for-racing-and-southern-tradition" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel"><img src="1226.jpg" alt="WRDW"></div></div>
+        </div>
+        <h3>Aiken Trials to feature horses, tailgates and family fun</h3>
+        <a class="story-link" href="https://www.wrdw.com/2026/03/05/aiken-trials-feature-horses-tailgates-family-fun/" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel"><img src="Spectrum_News_(2023).svg" alt="Spectrum News"></div></div>
+        </div>
+        <h3>Thoroughbred racing has a long history in SC</h3>
+        <a class="story-link" href="https://spectrumlocalnews.com/sc/south-carolina/news/2026/05/04/south-carolina-thoroughbred-racing" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel on-dark"><img src="AikenStandard.webp" alt="Aiken Standard"></div></div>
+        </div>
+        <h3>Aiken Training Track welcomes visitors with doughnut holes, coffee and thoroughbred racing info</h3>
+        <a class="story-link" href="https://www.postandcourier.com/aikenstandard/news/local/aiken-training-track-breeze-day-thoroughbreds/article_2e6ad42d-42c2-4672-b967-e4b397f300b3.html" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel"><img src="WGAC.webp" alt="WGAC"></div></div>
+        </div>
+        <h3>Aiken Offers Guided Tours of Historic Horse Training Facilities</h3>
+        <a class="story-link" href="https://wgac.com/2026/01/14/aiken-offers-guided-tours-of-historic-horse-training-facilities/" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel on-dark"><img src="postlogo.webp" alt="Post and Courier"></div></div>
+        </div>
+        <h3>SC county park opens 10-mile equestrian trail &lsquo;you won&rsquo;t find anywhere else&rsquo;</h3>
+        <a class="story-link" href="https://www.postandcourier.com/pee-dee/news/lynches-river-county-park-florence-sc-horse-campsite/article_09a4080a-88e2-41a5-b12a-776863336d64.html" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel on-dark"><img src="Scott_Logo_Reverse.svg" alt="Senator Tim Scott"></div></div>
+        </div>
+        <h3>Sen. Scott introduces resolution celebrating USC Aiken women&rsquo;s polo team&rsquo;s historic season</h3>
+        <a class="story-link" href="https://www.scott.senate.gov/media-center/press-releases/sens-scott-graham-introduce-resolution-celebrating-usc-aiken-womens-polo-teams-historic-season/" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="story-card">
+        <div class="story-photo">
+          <img class="bg" src="horsenews.png" alt="">
+          <div class="pub-badge"><div class="badge-panel on-dark"><img src="AikenStandard.webp" alt="Aiken Standard"></div></div>
+        </div>
+        <h3>Pacers and Polo to wrap up 2026 Aiken Triple Crown with game at Whitney Field on March 28</h3>
+        <a class="story-link" href="https://www.postandcourier.com/aikenstandard/aikenstandard/news/local/aiken-triple-crown-pacers-and-polo/article_65471bb6-cde8-4af4-bb75-3f1e7b2d1c72.html" target="_blank" rel="noopener">Read More <span class="arrow">&rarr;</span></a>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="shoe" aria-hidden="true">
+    <img src="horseshoe.png" alt="">
+  </div>
+  <p class="consent-note">By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View Mobile Terms of Service &amp; Privacy Policy for more info.</p>
+  <div class="footer-links"><a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a></div>
+  <div>&copy; 2026 South Carolina Equine Alliance. All rights reserved.</div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById("navToggle");
+  const navLinksEl = document.querySelector(".navlinks");
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinksEl.classList.toggle("open");
+    navToggle.classList.toggle("active", isOpen);
+    navToggle.setAttribute("aria-expanded", isOpen);
+  });
+</script>
+
+</body>
+</html>
+

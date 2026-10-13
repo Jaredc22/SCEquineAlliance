@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Become a Member — South Carolina Equine Alliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sc-blue: #042E56;
+    --navy-ink: #16233A;
+    --cream: #FAF8F4;
+    --white: #FFFFFF;
+    --gold: #A9803D;
+    --red: #DD2417;
+    --gray-slate: #626C7A;
+    --gray-line: #DCE0E5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--navy-ink);
+    font-family:'Inter', system-ui, sans-serif; line-height:1.6; font-size:16.5px;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 40px;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- Nav ---------- */
+  header.pagehead{background:var(--sc-blue); padding-bottom:60px;}
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:26px 48px; box-sizing:border-box;
+  }
+  .nav-logo{display:flex; align-items:center; text-decoration:none;}
+  .nav-logo img{height:150px; width:auto; object-fit:contain; display:block;}
+  .navlinks{display:flex; gap:34px;}
+  .navlinks a{color:rgba(255,255,255,.85); text-decoration:none; font-size:14.5px; font-weight:500;}
+  .navlinks a:hover, .navlinks a.active{color:var(--white);}
+  .navlinks a.active{border-bottom:2px solid var(--red); padding-bottom:4px;}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0; z-index:30;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--white); border-radius:1px; transition:transform .2s ease, opacity .2s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .pagehead-inner{padding:20px 48px 0; color:var(--white);}
+  h1.pagetitle{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:clamp(36px,4.2vw,52px);
+    margin:0 0 14px;
+  }
+  .pagehead-inner p{color:#C9D6E5; font-size:17.5px; max-width:600px; margin:0;}
+
+  /* ---------- Intro / dues ---------- */
+  section.intro{padding:56px 0 8px;}
+  .intro p{color:#3B4657; margin:0 0 20px; font-size:16.5px;}
+  .tier-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:6px;}
+  .tier-card{position:relative; display:block; cursor:pointer;}
+  .tier-card input[type="radio"]{position:absolute; opacity:0; width:auto;}
+  .tier-card-inner{
+    display:flex; flex-direction:column; gap:6px; background:var(--white); border:2px solid var(--gray-line);
+    border-radius:6px; padding:20px 18px; height:100%; transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .tier-card input:checked + .tier-card-inner{
+    border-color:var(--red); box-shadow:0 0 0 1px var(--red);
+  }
+  .tier-card input:focus-visible + .tier-card-inner{outline:2px solid var(--gold); outline-offset:2px;}
+  .tier-name{font-family:'Inter',sans-serif; font-weight:700; font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:var(--gray-slate);}
+  .tier-price{font-family:'Playfair Display',serif; font-weight:800; font-size:26px; color:var(--sc-blue); text-transform:none; letter-spacing:normal;}
+  .tier-period{font-family:'Inter',sans-serif; font-weight:500; font-size:13px; color:var(--gray-slate); margin-left:2px; text-transform:lowercase; letter-spacing:normal;}
+  .tier-desc{font-size:13.5px; font-weight:400; color:#3B4657; line-height:1.4; margin-top:2px; text-transform:none; letter-spacing:normal;}
+
+  .selected-summary{
+    font-family:'Playfair Display',serif; font-weight:700; font-size:17px; color:var(--sc-blue);
+    margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed var(--gray-line);
+  }
+
+  /* ---------- Form ---------- */
+  section.application{padding:8px 0 96px;}
+  .form-section{margin-bottom:44px;}
+  .form-section h2{
+    font-family:'Playfair Display', serif; font-weight:800; font-size:22px; color:var(--sc-blue);
+    margin:0 0 22px; padding-bottom:12px; border-bottom:1px solid var(--gray-line);
+  }
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  .form-row.single{grid-template-columns:1fr;}
+  label{
+    display:block; font-family:'Inter',sans-serif; font-weight:600; font-size:13px;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--gray-slate); margin-bottom:8px;
+  }
+  input, textarea{
+    width:100%; padding:13px 14px; border:1px solid var(--gray-line); border-radius:3px;
+    background:var(--white); color:var(--navy-ink); font-family:'Inter',sans-serif; font-size:15px;
+  }
+  input:focus, textarea:focus{outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold);}
+
+  .auth-text{
+    background:var(--white); border:1px solid var(--gray-line); padding:20px 22px; font-size:14.5px;
+    color:#3B4657; margin-bottom:22px;
+  }
+  .checkbox-row{display:flex; align-items:flex-start; gap:12px; margin-bottom:22px;}
+  .checkbox-row input[type="checkbox"]{width:auto; margin-top:3px; accent-color:var(--red);}
+  .checkbox-row label{
+    margin-bottom:0; text-transform:none; font-weight:500; letter-spacing:0; font-size:14.5px;
+    color:var(--navy-ink); flex:1; min-width:0; display:block;
+  }
+
+  .payment-note{
+    background:var(--white); border:1px solid var(--gray-line); padding:22px 24px; font-size:15px; color:#3B4657;
+  }
+  .payment-note strong{color:var(--navy-ink);}
+  .payment-note .online-note{
+    margin-top:14px; padding-top:14px; border-top:1px dashed var(--gray-line); color:var(--gray-slate); font-size:14px;
+  }
+
+  .submit-btn{
+    margin-top:8px; width:100%; padding:16px 28px; background:var(--red); color:var(--white);
+    border:none; border-radius:2px; font-family:'Inter',sans-serif; font-weight:700; font-size:15px;
+    letter-spacing:.03em; text-transform:uppercase; cursor:pointer;
+  }
+  .submit-btn:hover{background:#b81d13; color:var(--white);}
+  .submit-btn:disabled{opacity:.6; cursor:not-allowed;}
+  .form-status{font-size:14.5px; margin-top:14px; text-align:center; display:none;}
+  .form-status.success{color:#1e7a3d; display:block;}
+  .form-status.error{color:#b03a3a; display:block;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:44px 40px 54px; text-align:center; color:var(--gray-slate); font-size:13px;}
+  footer .shoe{margin-bottom:14px;}
+  footer .shoe img{display:block; width:28px; height:28px; object-fit:contain; margin:0 auto;}
+  footer .consent-note{
+    max-width:560px; margin:0 auto 16px; font-size:11.5px; line-height:1.6; color:#8A93A0;
+    display:flex; gap:8px; align-items:flex-start; text-align:left;
+    text-transform:none; font-weight:400; letter-spacing:normal;
+  }
+  footer .consent-note input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
+  footer .consent-note a{color:#8A93A0; text-decoration:underline;}
+  footer .consent-note a:hover{color:var(--red);}
+  footer .footer-links{margin-bottom:10px;}
+  footer .footer-links a{color:var(--gray-slate); text-decoration:underline; font-size:12.5px;}
+  footer .footer-links a:hover{color:var(--red);}
+
+  @media (max-width:860px){
+    nav{position:relative; padding:20px 24px;}
+    .nav-logo img{height:64px;}
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--sc-blue); padding:8px 24px 20px; box-shadow:0 12px 24px rgba(0,0,0,.25);
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:16px;}
+    .navlinks a.active{border-bottom:1px solid var(--red);}
+  }
+  @media (max-width:640px){
+    .form-row{grid-template-columns:1fr;}
+    .tier-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="pagehead">
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="SCEAFinalLogoWhite.png" alt="South Carolina Equine Alliance">
+    </a>
+    <div class="navlinks">
+      <a href="about.html">About</a>
+      <a href="media.html">Media</a>
+      <a href="events.html">Events</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="pagehead-inner">
+    <h1 class="pagetitle">Membership Application</h1>
+    <p>Join the coalition uniting South Carolina's horse industry &mdash; from breeders to fans of the Carolina Cup.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="intro">
+    <p>The South Carolina Equine Alliance is a coalition of groups and individuals dedicated to promoting and growing the horse industry here in our state. SCEA members represent every segment of our industry: from thoroughbred breeders to harness racers to the farmers who grow our feed to fans of the Carolina Cup. We unite interests across South Carolina to advocate for the horse industry and help it grow in the years ahead.</p>
+
+  </section>
+
+  <section class="application">
+    <form id="joinForm">
+
+      <div class="form-section">
+        <h2>Choose Your Membership</h2>
+        <div class="tier-grid">
+
+          <label class="tier-card">
+            <input type="radio" name="tier" value="Individual" data-amount="20" required>
+            <div class="tier-card-inner">
+              <span class="tier-name">Individual</span>
+              <span class="tier-price">$20<span class="tier-period">/year</span></span>
+              <span class="tier-desc">For individual breeders, riders, fans, and supporters.</span>
+            </div>
+          </label>
+
+          <label class="tier-card">
+            <input type="radio" name="tier" value="Organization" data-amount="60" required>
+            <div class="tier-card-inner">
+              <span class="tier-name">Organization</span>
+              <span class="tier-price">$60<span class="tier-period">/year</span></span>
+              <span class="tier-desc">For farms, businesses, and organizations.</span>
+            </div>
+          </label>
+
+          <label class="tier-card">
+            <input type="radio" name="tier" value="Founding Sponsor" data-amount="200" required>
+            <div class="tier-card-inner">
+              <span class="tier-name">Founding Sponsor</span>
+              <span class="tier-price">$200<span class="tier-period">/year</span></span>
+              <span class="tier-desc">For early champions helping launch the Alliance.</span>
+            </div>
+          </label>
+
+        </div>
+
+        <input type="hidden" id="amountField" name="amount" value="">
+      </div>
+
+      <div class="form-section">
+        <h2>Your Information</h2>
+        <div class="form-row single">
+          <div>
+            <label for="orgName">Full Name or Organization Name</label>
+            <input type="text" id="orgName" name="orgName" required>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div>
+            <label for="segment">Industry / Segment (breeder, trainer, rider, fan, vendor, etc.)</label>
+            <input type="text" id="segment" name="segment" required>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div>
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="orgPhone">Phone</label>
+            <input type="tel" id="orgPhone" name="orgPhone">
+          </div>
+          <div>
+            <label for="orgWebsite">Website (if applicable)</label>
+            <input type="text" id="orgWebsite" name="orgWebsite">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Primary Contact</h2>
+        <div class="form-row">
+          <div>
+            <label for="contactName">First and Last Name</label>
+            <input type="text" id="contactName" name="contactName" required>
+          </div>
+          <div>
+            <label for="contactTitle">Title / Role</label>
+            <input type="text" id="contactTitle" name="contactTitle">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="contactEmail">Email Address</label>
+            <input type="email" id="contactEmail" name="contactEmail" required>
+          </div>
+          <div>
+            <label for="contactPhone">Phone</label>
+            <input type="tel" id="contactPhone" name="contactPhone">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Authorization</h2>
+        <div class="auth-text">
+          By signing below, I confirm that the information provided is accurate and that I am authorized to submit this membership application on behalf of the above-named business or organization. I also authorize the South Carolina Equine Alliance to use the above-named business or organization&rsquo;s name and logo on the SCEA website and in other public facing forums at the SCEA&rsquo;s discretion.
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="printName">Print Name</label>
+            <input type="text" id="printName" name="printName" required>
+          </div>
+          <div>
+            <label for="authTitle">Title</label>
+            <input type="text" id="authTitle" name="authTitle">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="signature">Signature (type full name)</label>
+            <input type="text" id="signature" name="signature" required>
+          </div>
+          <div>
+            <label for="signDate">Date</label>
+            <input type="date" id="signDate" name="signDate" required>
+          </div>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="agree" name="agree" required>
+          <label for="agree">I have read and agree to the authorization statement above.</label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Payment</h2>
+        <div class="payment-note">
+          <div class="selected-summary" id="selectedSummary">Select a membership above to see your amount due.</div>
+          Submitting this application will take you to a secure Stripe checkout page to pay by card for the amount shown above.
+          <div class="online-note">
+            Prefer to pay by check instead? Make it payable to <strong>&ldquo;South Carolina Equine Alliance Inc&rdquo;</strong> and mail it along with a copy of this application to: South Carolina Equine Alliance, P.O. Box 183, Aiken, SC 29802. You're welcome to close this page after submitting if you'd rather mail a check &mdash; your application has already been received either way.
+          </div>
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="smsOptin" name="sms_optin" required>
+        <label for="smsOptin">By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View <a href="privacy-policy.html" style="color:var(--sc-blue); font-weight:600;">Mobile Terms of Service &amp; Privacy Policy</a> for more info.</label>
+      </div>
+
+      <button class="submit-btn" type="submit" id="submitBtn">Submit & Continue to Payment</button>
+      <div class="form-status" id="formStatus"></div>
+    </form>
+  </section>
+
+</div>
+
+<footer>
+  <div class="shoe" aria-hidden="true">
+    <img src="horseshoe.png" alt="">
+  </div>
+  <p class="consent-note">By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View Mobile Terms of Service &amp; Privacy Policy for more info.</p>
+  <div class="footer-links"><a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a></div>
+  <div>&copy; 2026 South Carolina Equine Alliance. All rights reserved.</div>
+</footer>
+
+<script>
+  const tierInputs = document.querySelectorAll('input[name="tier"]');
+  const summary = document.getElementById('selectedSummary');
+
+  function updateSummary(){
+    const checked = document.querySelector('input[name="tier"]:checked');
+    if (!checked) {
+      summary.textContent = 'Select a membership above to see your amount due.';
+      return;
+    }
+    const amount = checked.dataset.amount;
+    summary.textContent = `${checked.value} Membership — $${amount} due`;
+    document.getElementById('amountField').value = amount;
+  }
+
+  tierInputs.forEach(input => {
+    input.addEventListener('change', updateSummary);
+  });
+
+  const navToggle = document.getElementById("navToggle");
+  const navLinksEl = document.querySelector(".navlinks");
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinksEl.classList.toggle("open");
+    navToggle.classList.toggle("active", isOpen);
+    navToggle.setAttribute("aria-expanded", isOpen);
+  });
+
+  const form = document.getElementById('joinForm');
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    status.className = 'form-status';
+    status.textContent = '';
+
+    const payload = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      // Step 1: email the application details to SCEA, so we have a record
+      // even if the applicant abandons the payment step that follows.
+      const joinRes = await fetch('/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!joinRes.ok) throw new Error('Application submission failed');
+
+      // Step 2: create a Stripe Checkout session for the selected tier and
+      // send the applicant there to pay.
+      btn.textContent = 'Redirecting to payment...';
+      const checkoutRes = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tier: payload.tier,
+          contactEmail: payload.contactEmail,
+          orgName: payload.orgName
+        })
+      });
+      const checkoutData = await checkoutRes.json();
+      if (!checkoutRes.ok || !checkoutData.url) throw new Error('Checkout session failed');
+
+      window.location.href = checkoutData.url;
+      // page navigates away here; no need to reset button state
+    } catch (err) {
+      status.className = 'form-status error';
+      status.textContent = "Your application was received, but something went wrong starting payment. Please email info@scequinealliance.com and we'll get you squared away.";
+      btn.disabled = false;
+      btn.textContent = 'Submit & Continue to Payment';
+    }
+  });
+
+  // Handle return from Stripe Checkout
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('payment') === 'success') {
+    status.className = 'form-status success';
+    status.textContent = "Payment received — welcome to the South Carolina Equine Alliance! A confirmation has been sent to your email.";
+    status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else if (urlParams.get('payment') === 'cancelled') {
+    status.className = 'form-status error';
+    status.textContent = "Payment was cancelled. Your application was saved — you can try payment again below, or email info@scequinealliance.com if you'd rather pay by check.";
+    status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>
+
+</body>
+</html>
