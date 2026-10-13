@@ -219,6 +219,9 @@
   .form-consent input[type="checkbox"]{margin-top:3px; width:auto; accent-color:var(--red); flex-shrink:0;}
   .form-consent a{color:rgba(255,255,255,.85); text-decoration:underline;}
   .form-consent a:hover{color:var(--gold);}
+  .form-status{grid-column:span 2; font-size:14.5px; margin-top:6px; display:none;}
+  .form-status.success{color:#8fd4a8; display:block;}
+  .form-status.error{color:#f0a8a8; display:block;}
   form.gate input{
     grid-column:span 1; padding:13px 14px; border:1px solid rgba(255,255,255,.25);
     background:rgba(255,255,255,.06); color:var(--white); border-radius:2px;
@@ -437,16 +440,17 @@
   <div class="wrap">
     <h2>Stay Up to Date on the Latest News About the Equine Industry in South Carolina!</h2>
     <p class="lede">Get to the gate first. Sign up for SCEA news.</p>
-    <form class="gate" onsubmit="return false;">
-      <input type="text" placeholder="Name" required>
-      <input type="email" placeholder="Email" required>
-      <input type="text" placeholder="Zip Code" required>
-      <input type="tel" placeholder="Cell Phone" required>
+    <form class="gate" id="signupForm">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="zip" placeholder="Zip Code" required>
+      <input type="tel" name="phone" placeholder="Cell Phone" required>
       <label class="form-consent">
         <input type="checkbox" name="sms_optin" required>
         <span>By providing your information and checking the box, you consent to receive calls, emails and text messages. Msg &amp; data rates may apply. Msg frequency may vary. Messaging may include requests for donation. Reply &ldquo;STOP&rdquo; to opt-out &amp; &ldquo;HELP&rdquo; for help. View <a href="privacy-policy.html">Mobile Terms of Service &amp; Privacy Policy</a> for more info.</span>
       </label>
-      <button type="submit">Get to the Gate</button>
+      <button type="submit" id="signupBtn">Get to the Gate</button>
+      <div class="form-status" id="signupStatus"></div>
     </form>
   </div>
 </section>
@@ -487,6 +491,38 @@
   }
   setupHeroMedia();
   window.addEventListener("resize", setupHeroMedia);
+
+  const signupForm = document.getElementById("signupForm");
+  const signupBtn = document.getElementById("signupBtn");
+  const signupStatus = document.getElementById("signupStatus");
+
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    signupBtn.disabled = true;
+    signupBtn.textContent = "Signing up...";
+    signupStatus.className = "form-status";
+    signupStatus.textContent = "";
+
+    const payload = Object.fromEntries(new FormData(signupForm).entries());
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error("Request failed");
+      signupStatus.className = "form-status success";
+      signupStatus.textContent = "You're signed up! Thanks for staying in the loop.";
+      signupForm.reset();
+    } catch (err) {
+      signupStatus.className = "form-status error";
+      signupStatus.textContent = "Something went wrong. Please try again or email info@scequinealliance.com.";
+    } finally {
+      signupBtn.disabled = false;
+      signupBtn.textContent = "Get to the Gate";
+    }
+  });
 
   const navToggle = document.getElementById("navToggle");
   const navLinksEl = document.querySelector(".navlinks");

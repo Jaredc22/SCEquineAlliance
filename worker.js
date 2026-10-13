@@ -6,6 +6,7 @@
 import { handleContact } from "./contact.js";
 import { handleJoin } from "./join.js";
 import { handleCreateCheckout } from "./create-checkout.js";
+import { handleSubscribe } from "./subscribe.js";
 
 export default {
   async fetch(request, env, ctx) {
@@ -20,6 +21,9 @@ export default {
     }
     if (request.method === "POST" && pathname === "/api/create-checkout") {
       return handleCreateCheckout(request, env);
+    }
+    if (request.method === "POST" && pathname === "/api/subscribe") {
+      return handleSubscribe(request, env);
     }
 
     // Not an API route -- serve the static site as usual.
