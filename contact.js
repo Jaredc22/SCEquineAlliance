@@ -57,7 +57,7 @@ export async function handleContact(request, env) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from: "SCEA Website <contact@scequinealliance.com>",
+        from: "SCEA Website <info@scequinealliance.com>",
         to: ["info@scequinealliance.com"],
         reply_to: email,
         subject: `New contact form message from ${name}`,
