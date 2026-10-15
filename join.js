@@ -1,6 +1,8 @@
 // Handles the membership application form submission.
 // Imported and routed to by worker.js -- see that file for routing.
 
+import { addToMailchimp } from "./mailchimp.js";
+
 export async function handleJoin(request, env) {
   let data;
   try {
@@ -95,6 +97,25 @@ export async function handleJoin(request, env) {
         status: 502,
         headers: { "Content-Type": "application/json" }
       });
+    }
+
+    // Add to Mailchimp with the "Member" tag, which triggers the membership
+    // welcome automation. Runs after the application email above succeeds;
+    // failures here don't block the application -- Resend is the critical path.
+    try {
+      await addToMailchimp({
+        email: data.contactEmail,
+        mergeFields: {
+          FNAME: data.contactName,
+          PHONE: data.contactPhone,
+          COMPANY: data.orgName
+        },
+        tag: "Member",
+        env
+      });
+    } catch (mcErr) {
+      // Intentionally swallowed -- the application is already received and
+      // emailed either way.
     }
 
     return new Response(JSON.stringify({ success: true }), {

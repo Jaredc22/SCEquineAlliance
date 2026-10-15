@@ -1,6 +1,8 @@
 // Handles the newsletter signup form (homepage + Get Involved page).
 // Imported and routed to by worker.js -- see that file for routing.
 
+import { addToMailchimp, ZIP_MERGE_TAG } from "./mailchimp.js";
+
 export async function handleSubscribe(request, env) {
   let data;
   try {
@@ -71,6 +73,26 @@ export async function handleSubscribe(request, env) {
         status: 502,
         headers: { "Content-Type": "application/json" }
       });
+    }
+
+    // Add to Mailchimp with the "Newsletter" tag, which triggers the
+    // subscriber welcome automation. This runs after the notification email
+    // above succeeds, and failures here don't block the form -- Resend is
+    // the critical path.
+    try {
+      await addToMailchimp({
+        email,
+        mergeFields: {
+          FNAME: name,
+          PHONE: phone,
+          [ZIP_MERGE_TAG]: zip
+        },
+        tag: "Newsletter",
+        env
+      });
+    } catch (mcErr) {
+      // Intentionally swallowed -- the person still gets confirmation their
+      // signup went through, and we already have their info via email.
     }
 
     return new Response(JSON.stringify({ success: true }), {
