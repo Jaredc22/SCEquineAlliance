@@ -83,7 +83,7 @@ export async function addToMailchimp({ email, mergeFields, tag, env }) {
   const authHeader = "Basic " + btoa(`anystring:${env.MAILCHIMP_API_KEY}`);
 
   // Step 1: add or update the contact.
-  await fetch(`https://${prefix}.api.mailchimp.com/3.0/lists/${listId}/members/${subscriberHash}`, {
+  const memberRes = await fetch(`https://${prefix}.api.mailchimp.com/3.0/lists/${listId}/members/${subscriberHash}`, {
     method: "PUT",
     headers: {
       "Authorization": authHeader,
@@ -96,8 +96,14 @@ export async function addToMailchimp({ email, mergeFields, tag, env }) {
     })
   });
 
+  if (!memberRes.ok) {
+    const errText = await memberRes.text();
+    console.error("Mailchimp member upsert failed:", memberRes.status, errText);
+    return; // don't attempt tagging if the member upsert itself failed
+  }
+
   // Step 2: apply the tag, which triggers the matching welcome automation.
-  await fetch(`https://${prefix}.api.mailchimp.com/3.0/lists/${listId}/members/${subscriberHash}/tags`, {
+  const tagRes = await fetch(`https://${prefix}.api.mailchimp.com/3.0/lists/${listId}/members/${subscriberHash}/tags`, {
     method: "POST",
     headers: {
       "Authorization": authHeader,
@@ -107,4 +113,9 @@ export async function addToMailchimp({ email, mergeFields, tag, env }) {
       tags: [{ name: tag, status: "active" }]
     })
   });
+
+  if (!tagRes.ok) {
+    const errText = await tagRes.text();
+    console.error("Mailchimp tagging failed:", tagRes.status, errText);
+  }
 }
