@@ -114,8 +114,9 @@ export async function handleJoin(request, env) {
         env
       });
     } catch (mcErr) {
-      // Intentionally swallowed -- the application is already received and
-      // emailed either way.
+      // Logged (but not re-thrown) -- the application is already received
+      // and emailed either way.
+      console.error("Mailchimp call threw an exception:", String(mcErr), mcErr && mcErr.stack);
     }
 
     return new Response(JSON.stringify({ success: true }), {

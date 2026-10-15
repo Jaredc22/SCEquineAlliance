@@ -91,8 +91,9 @@ export async function handleSubscribe(request, env) {
         env
       });
     } catch (mcErr) {
-      // Intentionally swallowed -- the person still gets confirmation their
-      // signup went through, and we already have their info via email.
+      // Logged (but not re-thrown) -- the person still gets confirmation
+      // their signup went through, and we already have their info via email.
+      console.error("Mailchimp call threw an exception:", String(mcErr), mcErr && mcErr.stack);
     }
 
     return new Response(JSON.stringify({ success: true }), {
