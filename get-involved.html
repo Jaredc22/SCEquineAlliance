@@ -136,6 +136,19 @@
     form.gate{grid-template-columns:1fr;}
     form.gate input, form.gate button{grid-column:span 1;}
   }
+.social-bar{
+  background:var(--red); padding:16px 24px; display:flex; justify-content:center;
+  align-items:center; gap:40px; flex-wrap:wrap;
+}
+.social-bar a{
+  display:flex; align-items:center; gap:10px; color:var(--white); text-decoration:none;
+  font-family:'Inter',sans-serif; font-weight:500; font-size:14.5px;
+}
+.social-bar a:hover{opacity:.8;}
+.social-bar img{width:22px; height:22px; display:block;}
+@media (max-width:640px){
+  .social-bar{gap:20px; padding:14px 20px;}
+}
 </style>
 </head>
 <body>
@@ -188,6 +201,20 @@
   </section>
 </div>
 
+<div class="social-bar">
+  <a href="https://www.facebook.com/people/South-Carolina-Equine-Alliance/61594525253933/" target="_blank" rel="noopener" aria-label="Facebook">
+    <img src="fb.svg" alt="">
+    <span>South Carolina Equine Alliance</span>
+  </a>
+  <a href="https://instagram.com/scequinealliance" target="_blank" rel="noopener" aria-label="Instagram">
+    <img src="ig.svg" alt="">
+    <span>@scequinealliance</span>
+  </a>
+  <a href="https://x.com/scequinealliance" target="_blank" rel="noopener" aria-label="X">
+    <img src="x.svg" alt="">
+    <span>@scequinealliance</span>
+  </a>
+</div>
 <footer>
   <div class="shoe" aria-hidden="true">
     <img src="horseshoe.png" alt="">
