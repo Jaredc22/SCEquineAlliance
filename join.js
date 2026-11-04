@@ -46,6 +46,12 @@ export async function handleJoin(request, env) {
 
   const row = (label, value) => `<p><strong>${label}:</strong> ${escapeHtml(value) || "&mdash;"}</p>`;
 
+  // Free Member has no payment step; Founding Sponsor is sent to Stripe after this
+  // email goes out, so payment isn't confirmed yet when it arrives.
+  const paymentNote = data.amount === "0"
+    ? "Payment: none &mdash; Free Member (no cost)."
+    : "Payment: applicant was sent to Stripe checkout after submitting. Check Stripe to confirm payment, or watch for a mailed check.";
+
   const emailBody = `
     <h2>New SCEA Membership Application</h2>
 
@@ -72,7 +78,7 @@ export async function handleJoin(request, env) {
     ${row("Signature (typed)", data.signature)}
     ${row("Date", data.signDate)}
 
-    <p style="margin-top:20px; color:#666;">Payment: not processed via this form &mdash; applicant was instructed to mail a check or contact info@scequinealliance.com.</p>
+    <p style="margin-top:20px; color:#666;">${paymentNote}</p>
   `;
 
   try {

@@ -67,6 +67,18 @@
   form.gate button:hover{background:#0a3d6e;}
   form.gate input:focus, form.gate button:focus-visible{outline:2px solid var(--gold); outline-offset:1px;}
 
+  .signup-divider{
+    display:flex; align-items:center; gap:16px; margin:48px auto 32px; color:#A9B4C2; max-width:520px;
+    font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  }
+  .signup-divider::before, .signup-divider::after{content:""; flex:1; height:1px; background:var(--gray-line);}
+  .member-cta{
+    display:inline-block; background:var(--red); color:var(--white); text-decoration:none;
+    font-family:'Playfair Display',serif; font-weight:800; font-size:20px;
+    padding:18px 42px; border-radius:3px; letter-spacing:.01em;
+  }
+  .member-cta:hover{background:#b81d13;}
+
   /* ---------- Footer ---------- */
   footer{padding:44px 40px 54px; text-align:center; color:var(--gray-slate); font-size:13px;}
   footer .shoe{margin-bottom:14px;}
@@ -115,6 +127,10 @@
       <button type="submit" id="signupBtn">Get to the Gate</button>
       <div class="form-status" id="signupStatus"></div>
     </form>
+
+    <div class="signup-divider"><span>or</span></div>
+    <a class="member-cta" href="join.html">Become a Member</a>
+
   </section>
 </div>
 

@@ -5,9 +5,8 @@
 // name only -- never trusted from the client.
 
 const TIER_AMOUNTS = {
-  "Individual": 2000,        // amounts in cents
-  "Organization": 6000,
-  "Founding Sponsor": 20000
+  "Founding Sponsor": 20000  // amount in cents. Free Member tier never
+                             // reaches this file -- it has no payment step.
 };
 
 export async function handleCreateCheckout(request, env) {
