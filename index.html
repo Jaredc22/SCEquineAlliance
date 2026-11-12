@@ -192,6 +192,12 @@
     padding:20px 16px; box-shadow:0 8px 24px rgba(0,0,0,.25);
   }
   .member-badge img{width:100%; height:auto; object-fit:contain;}
+  /* Sponsors without a logo show their name in its place */
+  .member-badge .badge-name{
+    font-family:'Playfair Display',serif; font-weight:800; font-size:21px; line-height:1.2;
+    color:var(--sc-blue); text-align:center; padding:12px 0; width:100%;
+    border-top:2px solid var(--gold); border-bottom:2px solid var(--gold);
+  }
   .member-badge .badge-label{
     font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:.08em;
     text-transform:uppercase; color:var(--gray-slate);
@@ -498,6 +504,14 @@
             <span class="badge-label">Carolina Cup</span>
             <span class="sponsor-tag">Founding Sponsor</span>
           </div></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1566068256639-2f046b164a98?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Dr. Rose Lee Hayes">
+          <div class="member-badge"><div class="badge-circle">
+            <span class="badge-name">Dr. Rose Lee Hayes</span>
+            <span class="sponsor-tag">Founding Sponsor</span>
+          </div></div>
+        </div>
       </div>
       <div class="carousel-nav">
         <button class="carousel-btn" id="memberPrev" aria-label="Previous">&#8592;</button>
